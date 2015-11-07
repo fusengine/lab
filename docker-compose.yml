@@ -1,0 +1,36 @@
+apache2:
+  restart: always
+  image: fusengine/apache2-php:1.3.3
+  ports:
+      - "80:80"
+  volumes: # creation de volume entre les machines DossierLocal{mac}:DossierConteneur{docker}
+      - /Users/brunoazoulay/Docker/lab/www:/web/lab
+      - /Users/brunoazoulay/Docker/lab/config/php.ini:/etc/php5/apache2/conf.d/30-custom.ini
+      - /Users/brunoazoulay/Docker/lab/config/sites:/etc/apache2/sites-enabled
+  environment:
+      - DEBUG=On
+      - ALLOW_OVERRIDE=On
+      - APACHE_RUN_GROUP="staff"
+      - APACHE_RUN_USER="brunoazoulay"
+      - APACHE_ROOT_PATH="/Users/brunoazoulay/Docker/lab/www"
+  links: #creation de lien entre conteneur
+      - bdd:db
+      - maildev:maildev
+
+# Base de donnée MariaDB
+bdd:
+  restart: always
+  image: mariadb
+  volumes:
+      - /var/lib/mysql
+  environment:
+      - MYSQL_ROOT_PASSWORD=root
+  ports:
+    - "36:3306"
+
+# Serveur MailDev
+maildev:
+  restart: always
+  image: djfarrelly/maildev
+  ports:
+    - "81:80" # le port 1080 va communiquwe avec le port 80 de notre machine
