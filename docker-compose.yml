@@ -1,18 +1,17 @@
-apache2:
+apache:
   restart: always
-  image: fusengine/apache2-php:1.3.3
+  image: fusengine/apache2-php5
   ports:
       - "80:80"
   volumes: # creation de volume entre les machines DossierLocal{mac}:DossierConteneur{docker}
-      - /Users/brunoazoulay/Docker/lab/www:/web/lab
+      - /Users/brunoazoulay/Docker/lab/www:/var/www
       - /Users/brunoazoulay/Docker/lab/config/php.ini:/etc/php5/apache2/conf.d/30-custom.ini
       - /Users/brunoazoulay/Docker/lab/config/sites:/etc/apache2/sites-enabled
   environment:
-      - DEBUG=On
-      - ALLOW_OVERRIDE=On
       - APACHE_RUN_GROUP="staff"
       - APACHE_RUN_USER="brunoazoulay"
       - APACHE_ROOT_PATH="/Users/brunoazoulay/Docker/lab/www"
+
   links: #creation de lien entre conteneur
       - bdd:db
       - maildev:maildev
