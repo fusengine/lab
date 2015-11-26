@@ -4,14 +4,11 @@ apache:
   ports:
       - "80:80"
   volumes: # creation de volume entre les machines DossierLocal{mac}:DossierConteneur{docker}
-      - /Users/brunoazoulay/Docker/lab/www:/var/www
+      - /Users/brunoazoulay/Docker/lab/www:/app/web
       - /Users/brunoazoulay/Docker/lab/config/php.ini:/etc/php5/apache2/conf.d/30-custom.ini
       - /Users/brunoazoulay/Docker/lab/config/sites:/etc/apache2/sites-enabled
   environment:
-      - APACHE_RUN_GROUP="staff"
-      - APACHE_RUN_USER="brunoazoulay"
-      - APACHE_ROOT_PATH="/Users/brunoazoulay/Docker/lab/www"
-
+      - ALLOW_OVERRIDE=true
   links: #creation de lien entre conteneur
       - bdd:db
       - maildev:maildev
