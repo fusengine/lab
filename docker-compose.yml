@@ -1,6 +1,7 @@
+
 apache:
   restart: always
-  image: fusengine/apache2-php5
+  image: fusengine/apache-php
   ports:
       - "80:80"
   volumes: # creation de volume entre les machines DossierLocal{mac}:DossierConteneur{docker}
@@ -10,17 +11,15 @@ apache:
   environment:
       - ALLOW_OVERRIDE=true
   links: #creation de lien entre conteneur
-      - bdd:db
-      - maildev:maildev
+      - bdd
+      - maildev
 
 # Base de donnée MariaDB
 bdd:
   restart: always
-  image: mariadb
+  image: fusengine/mariadb-osx
   volumes:
-      - /var/lib/mysql
-  environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - /Users/brunoazoulay/Docker/BDD:/var/lib/mysql
   ports:
     - "36:3306"
 
