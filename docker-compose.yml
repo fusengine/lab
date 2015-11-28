@@ -18,16 +18,11 @@ apache:
 bdd:
   restart: always
   image: fusengine/mariadb-osx
-<<<<<<< HEAD
   volumes:
       - /Users/brunoazoulay/Docker/BDD:/var/lib/mysql
-=======
->>>>>>> origin/master
   ports:
     - "36:3306"
-  volumes:
-    - /Users/brunoazoulay/Docker/BDD/data:/var/lib/mysql
-    - /Users/brunoazoulay/Docker/BDD/mysql:/etc/mysql
+
 
 # Composer
 composer:
