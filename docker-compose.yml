@@ -42,6 +42,6 @@ composer:
   restart: always
   image: fusengine/composer-laravel
   environment:
-    - GITHUB_TOKEN=e790ee95e255133aa92fbd0a00800891b0dad017
+    - GITHUB_TOKEN=yourtokengit
   volumes:
     - /Users/brunoazoulay/Docker/lab/local.dev:/var/www/html
