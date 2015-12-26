@@ -6,7 +6,7 @@ apache:
       - "80:80"
   volumes: # creation de volume entre les machines DossierLocal{mac}:DossierConteneur{docker}
       - /Users/brunoazoulay/Docker/lab/local.dev:/app/web
-      - /Users/brunoazoulay/Docker/lab/config/php.ini:/etc/php5/apache2/conf.d/30-custom.ini
+      - /Users/brunoazoulay/Docker/lab/config/php.ini:/etc/php/php/7.0/apache2/conf.d/30-custom.ini
       - /Users/brunoazoulay/Docker/lab/config/sites:/etc/apache2/sites-enabled
   environment:
       - ALLOW_OVERRIDE=true
@@ -19,17 +19,9 @@ bdd:
   restart: always
   image: fusengine/mariadb-osx
   volumes:
-      - /Users/brunoazoulay/Docker/BDD:/var/lib/mysql
+    - /Users/brunoazoulay/Docker/BDD:/var/lib/mysql
   ports:
     - "36:3306"
-
-
-# Composer
-composer:
-  restart: always
-  image: fusengine/composer
-  volumes_from:
-    - apache
 
 # Serveur MailDev
 maildev:
@@ -37,3 +29,19 @@ maildev:
   image: djfarrelly/maildev
   ports:
     - "81:80" # le port 1080 va communiquwe avec le port 80 de notre machine
+
+# Bower
+bower:
+  restart: always
+  image: fusengine/docker-bower-gulp-browserify
+  volumes:
+    - /Users/brunoazoulay/Docker/lab/local.dev:/data
+
+# composer
+composer:
+  restart: always
+  image: fusengine/composer-laravel
+  environment:
+    - GITHUB_TOKEN=e790ee95e255133aa92fbd0a00800891b0dad017
+  volumes:
+    - /Users/brunoazoulay/Docker/lab/local.dev:/var/www/html
